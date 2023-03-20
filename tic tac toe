@@ -1,0 +1,466 @@
+import random
+print("Witaj w grze kółko krzyzyk!\n")
+print()
+print(" 0 | 1 | 2 ")
+print("-----------")
+print(" 3 | 4 | 5 ")
+print("-----------")
+print(" 6 | 7 | 8")
+print()
+print("Wpisz numer od 0 do 8 aby wybrać pole")
+print("Spróbuj pokonać komputer w grze :^)")
+print("glhf")
+
+
+class Game:
+
+    def __init__(self):
+      self.board = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
+      self.win_conditions = ((0, 1, 2), (3, 4, 5), (6, 7, 8), (0, 4, 8), (2, 4, 6), (0, 3, 6), (1, 4, 7), (2, 5, 8))
+      self.moves_count = 0
+
+    def create_board(self):
+        print()
+        print(" {} | {} | {} ".format(self.board[0], self.board[1], self.board[2]))
+        print("-----------")
+        print(" {} | {} | {} ".format(self.board[3], self.board[4], self.board[5]))
+        print("-----------")
+        print(" {} | {} | {} ".format(self.board[6], self.board[7], self.board[8]))
+        print()
+
+    def p1(self):
+            try:
+              print("GRACZ X")
+              while True:
+                question = int(input("Wpisz numer pola, na ktore chcesz postawić X (0-8)\n"))
+                if question >= 0 and question <= 8:
+                  break
+                else:
+                  continue
+              if self.board[question] != "X" and self.board[question] != "O":
+                  self.board[question] = "X"
+                  self.create_board()
+                  self.moves_count += 1
+              else:
+                print("To pole jest już zajęte")
+                self.p1()
+              self.check_win()
+            except ValueError:
+              print("Wpisz NUMER od 0 do 8")
+              self.p1()
+
+    def p2(self):
+          print("GRACZ O postawił O")
+#blocking
+          while True:
+            if self.board[0] == "X" and self.board[1] == "X" and self.board[2] == " ":
+              self.board[2] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[1] == "X" and self.board[2] == "X" and self.board[0] == " ":
+              self.board[0] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+              
+            elif self.board[0] == "X" and self.board[2] == "X" and self.board[1] == " ":
+              self.board[1] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()  
+              break
+                
+  #second row AI
+            elif self.board[3] == "X" and self.board[4] == "X" and self.board[5] == " ":
+              self.board[5] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[3] == "X" and self.board[5] == "X" and self.board[4] == " ":
+              self.board[4] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+            
+            elif self.board[4] == "X" and self.board[5] == "X" and self.board[3] == " ":
+              self.board[3] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()  
+              break
+  
+  #third row AI
+            elif self.board[6] == "X" and self.board[7] == "X" and self.board[8] == " ":
+              self.board[8] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[6] == "X" and self.board[8] == "X" and self.board[7] == " ":
+              self.board[7] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+            
+            elif self.board[7] == "X" and self.board[8] == "X" and self.board[6] == " ":
+              self.board[6] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()   
+              break
+  
+  #first collumn AI
+            elif self.board[0] == "X" and self.board[3] == "X" and self.board[6] == " ":
+              self.board[6] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[0] == "X" and self.board[6] == "X" and self.board[3] == " ":
+              self.board[3] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[3] == "X" and self.board[6] == "X" and self.board[0] == " ":
+              self.board[0] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+  
+  #second collumn AI
+            elif self.board[1] == "X" and self.board[4] == "X" and self.board[7] == " ":
+              self.board[7] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[1] == "X" and self.board[7] == "X" and self.board[4] == " ":
+              self.board[4] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[7] == "X" and self.board[4] == "X" and self.board[1] == " ":
+              self.board[1] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()  
+              break
+  
+  #third collumn AI 
+            elif self.board[2] == "X" and self.board[5] == "X" and self.board[8] == " ":
+              self.board[8] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[2] == "X" and self.board[8] == "X" and self.board[5] == " ":
+              self.board[5] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[5] == "X" and self.board[8] == "X" and self.board[2] == " ":
+              self.board[2] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()   
+              break
+  
+  #diagnal
+            elif self.board[0] == "X" and self.board[4] == "X" and self.board[8] == " ":
+              self.board[8] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[0] == "X" and self.board[8] == "X" and self.board[4] == " ":
+              self.board[4] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[4] == "X" and self.board[8] == "X" and self.board[0] == " ":
+              self.board[0] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()    
+              break
+  
+            elif self.board[2] == "X" and self.board[4] == "X" and self.board[6] == " ":
+              self.board[6] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[2] == "O" and self.board[6] == "X" and self.board[4] == " ":
+              self.board[4] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[6] == "X" and self.board[4] == "X" and self.board[2] == " ":
+              self.board[2] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+  
+  
+  
+  #random attacking      
+  #first row AI
+            elif self.board[0] == "O" and self.board[1] == "0" and self.board[2] == " ":
+              self.board[2] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[1] == "O" and self.board[2] == "0" and self.board[0] == " ":
+              self.board[0] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[0] == "O" and self.board[2] == "0" and self.board[1] == " ":
+              self.board[1] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win() 
+              break
+                
+  #second row AI
+            elif self.board[3] == "O" and self.board[4] == "0" and self.board[5] == " ":
+              self.board[5] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[3] == "O" and self.board[5] == "0" and self.board[4] == " ":
+              self.board[4] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+            
+            elif self.board[4] == "O" and self.board[5] == "0" and self.board[3] == " ":
+              self.board[3] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()  
+              break
+  
+  #third row AI
+            elif self.board[6] == "O" and self.board[7] == "0" and self.board[8] == " ":
+              self.board[8] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+              
+            elif self.board[6] == "O" and self.board[8] == "0" and self.board[7] == " ":
+              self.board[7] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+            
+            elif self.board[7] == "O" and self.board[8] == "0" and self.board[6] == " ":
+              self.board[6] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()   
+              break
+  
+  #first collumn AI
+            elif self.board[0] == "O" and self.board[3] == "0" and self.board[6] == " ":
+              self.board[6] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[0] == "O" and self.board[6] == "0" and self.board[3] == " ":
+              self.board[3] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[3] == "O" and self.board[6] == "0" and self.board[0] == " ":
+              self.board[0] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+  
+  #second collumn AI
+            elif self.board[1] == "O" and self.board[4] == "0" and self.board[7] == " ":
+              self.board[7] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+              
+            elif self.board[1] == "O" and self.board[7] == "0" and self.board[4] == " ":
+              self.board[4] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[7] == "O" and self.board[4] == "0" and self.board[1] == " ":
+              self.board[1] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()  
+              break
+  
+  #third collumn AI 
+            elif self.board[2] == "O" and self.board[5] == "0" and self.board[8] == " ":
+              self.board[8] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[2] == "O" and self.board[8] == "0" and self.board[5] == " ":
+              self.board[5] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[5] == "O" and self.board[8] == "0" and self.board[2] == " ":
+              self.board[2] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()   
+              break
+  
+  #diagnal
+            elif self.board[0] == "O" and self.board[4] == "0" and self.board[8] == " ":
+              self.board[8] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[0] == "O" and self.board[8] == "0" and self.board[4] == " ":
+              self.board[4] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            if self.board[4] == "O" and self.board[8] == "0" and self.board[0] == " ":
+              self.board[0] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()  
+              break
+  
+            elif self.board[2] == "O" and self.board[4] == "0" and self.board[6] == " ":
+              self.board[6] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[2] == "O" and self.board[6] == "0" and self.board[4] == " ":
+              self.board[4] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win()
+              break
+                
+            elif self.board[6] == "O" and self.board[4] == "0" and self.board[2] == " ":
+              self.board[2] = "O"
+              self.create_board()
+              self.moves_count += 1
+              self.check_win() 
+              break
+  
+            else:
+              while True:  
+                number = random.randint(0,8)
+                if self.board[number] == " ":
+                  self.board[number] = "O"
+                  self.create_board()
+                  self.moves_count += 1
+                  self.check_win()  
+                  break
+                else:
+                  continue
+              break
+              
+      
+ #lepiej nie otwierać bo ilość warunków powala 
+              
+    def check_win(self):
+        for a in self.win_conditions:
+            if self.board[a[0]] == self.board[a[1]] == self.board[a[2]] == "X":
+                print("WYGRYWA GRACZ X")
+                self.play_again()
+            if self.board[a[0]] == self.board[a[1]] == self.board[a[2]] == "O":
+                print("WYGRYWA GRACZ O")
+                self.play_again()
+            elif self.moves_count == 9:
+                print("REMIS!")
+                self.play_again()
+            else:
+              if self.board[0] != " " and self.board[1] != " " and self.board[2] != " " and self.board[3] != " " and self.board[4] != " " and self.board[5] != " " and self.board[6] != " " and self.board[7] != " " and self.board[8] != " ":
+                print("REMIS!")
+                self.play_again()
+
+    def play(self):
+        while True:
+            self.p1()
+            self.p2()
+
+    def run(self):
+        self.moves_count = 0
+        self.board.clear()
+        self.board = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
+        self.create_board()
+        self.play()
+
+  
+    def play_again(self):
+        while True:
+            question = input("Chcesz zagrać ponownie? wpisz t albo n\n")
+            if question == "t":
+                print("GLHF")
+                self.run()
+            elif question == "n":
+                print("Dzięki za grę!")
+                quit()
+            else:
+                print("Niepoprawny input")
+
+ttt = Game()
+ttt.run()
